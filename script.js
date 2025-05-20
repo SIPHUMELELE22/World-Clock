@@ -22,26 +22,38 @@ function updateTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
+
+  if (selectedCityTimezone) {
+    let cityTime = moment().tz(selectedCityTimezone);
+    let selectedDate = document.querySelector("#selected-date");
+    let selectedTime = document.querySelector("#selected-time");
+
+    if (selectedDate && selectedTime) {
+      selectedDate.innerHTML = cityTime.format("MMMM Do YYYY");
+      selectedTime.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
+    }
+  }
 }
 
+let selectedCityTimezone = null;
+
 function updateCity(event) {
-  let cityTimezone = event.target.value;
-  if (cityTimezone === "current") {
-    cityTimezone = moment.tz.guess();
+  selectedCityTimezone = event.target.value;
+  if (selectedCityTimezone === "current") {
+    selectedCityTimezone = moment.tz.guess();
   }
-  let cityName = cityTimezone.split("/")[1].replace("_", " ");
-  let cityTime = moment().tz(cityTimezone);
+
+  let cityName = selectedCityTimezone.split("/")[1].replace("_", " ");
   let citiesElement = document.querySelector("#city");
+
   citiesElement.innerHTML = `
-  <div class="city">
-  <div>
-    <h2>${cityName}</h2>
-<div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-  </div>
- <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
+    <div class="city">
+      <div>
+        <h2>${cityName}</h2>
+        <div class="date" id="selected-date"></div>
+      </div>
+      <div class="time" id="selected-time"></div>
+    </div>
   `;
 
   citiesElement.style.display = "block";
