@@ -43,6 +43,10 @@ select option {
 .city:last-child {
   border: none;
 }
+#city {
+  display: none;
+  border-top: 1px dashed rgba(154, 150, 150, 0.2);
+}
 
 .date {
   opacity: 0.7;

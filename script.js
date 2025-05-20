@@ -1,12 +1,24 @@
 function updateTime() {
-  let parisElement = document.querySelector("#paris");
-  if (parisElement) {
-    let parisDateElement = parisElement.querySelector(".date");
-    let parisTimeElement = parisElement.querySelector(".time");
-    let parisTime = moment().tz("Europe/Paris");
+  let joburgElement = document.querySelector("#johannesburg");
+  if (joburgElement) {
+    let joburgDateElement = joburgElement.querySelector(".date");
+    let joburgTimeElement = joburgElement.querySelector(".time");
+    let joburgTime = moment().tz("Africa/Johannesburg");
 
-    parisDateElement.innerHTML = parisTime.format("MMMM	Do YYYY");
-    parisTimeElement.innerHTML = parisTime.format(
+    joburgDateElement.innerHTML = joburgTime.format("MMMM	Do YYYY");
+    joburgTimeElement.innerHTML = joburgTime.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
+
+  let londonElement = document.querySelector("#london");
+  if (londonElement) {
+    let londonDateElement = londonElement.querySelector(".date");
+    let londonTimeElement = londonElement.querySelector(".time");
+    let londonTime = moment().tz("Europe/London");
+
+    londonDateElement.innerHTML = londonTime.format("MMMM	Do YYYY");
+    londonTimeElement.innerHTML = londonTime.format(
       "h:mm:ss [<small>]A[</small>]"
     );
   }
@@ -17,13 +29,13 @@ function updateCity(event) {
   if (cityTimezone === "current") {
     cityTimezone = moment.tz.guess();
   }
-  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityName = cityTimezone.split("/")[1].replace("_", " ");
   let cityTime = moment().tz(cityTimezone);
   let citiesElement = document.querySelector("#city");
   citiesElement.innerHTML = `
   <div class="city">
   <div>
-    <h2>${cityTime.format("hh:mm:ss A")}</h2>
+    <h2>${cityName}</h2>
 <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
   </div>
  <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
@@ -31,6 +43,8 @@ function updateCity(event) {
   )}</small></div>
   </div>
   `;
+
+  citiesElement.style.display = "block";
 }
 updateTime();
 setInterval(updateTime, 1000);
