@@ -62,7 +62,8 @@ select option {
   vertical-align: middle;
   line-height: 48px;
 }
-a {
+a,
+strong {
   color: #8ca33a;
 }
 footer {
